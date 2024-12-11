@@ -387,13 +387,13 @@ class QSC_Code_Frac_Chars_Hex_Words(QSCodeBase):
 @register_quality_signal('qsc_code_frac_lines_prompt_comments', 'codedocument')
 class QSC_Code_Frac_Lines_Prompt_Comments(QSCodeBase):
     """
-    The fraction of lines that contain prompt comments (e.g., 'you code here', 'fixme', 'todo').
+    The fraction of lines that contain prompt comments (e.g., 'your code here', 'fixme', 'todo').
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
     
     def __call__(self, code: QSCodeDocument) -> SignalType:
-        prompt_comments = ['you code here', 'fixme', 'todo']
+        prompt_comments = ['your code here', 'fixme', 'todo']
 
         total = len(code.raw_lines)
         if total == 0:
