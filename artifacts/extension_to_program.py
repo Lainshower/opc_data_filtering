@@ -121,7 +121,7 @@ EXTENSION_TO_PROGRAM = {
     "rd": "r",
     "hlean": "lean",
     "lean": "lean",
-    "coq": "v",
+    "coq": "coq",
     "ctp": "php",
     "php": "php",
     "phpt": "php",
