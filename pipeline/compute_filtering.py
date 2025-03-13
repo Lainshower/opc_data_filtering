@@ -55,7 +55,7 @@ class CodeFilter(object):
         err_msg = {} # error messages for each filter
 
         # if doc_type is 'unknown', filter it out straightly
-        if doc_type == 'unknown':
+        if doc_type == 'unknown' or doc_type == 'excluded':
             final_result = {
                 'effective': str(0),
                 'hit_map': json.dumps(hit_map)

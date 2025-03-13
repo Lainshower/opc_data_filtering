@@ -108,6 +108,8 @@ class ComputeCodeQualitySignal():
     # compute quality signals for a document
     def compute_qs(self, text:str, filename:str, lang:str, ext:str, file_size_in_byte:int, program_lang:str, doc_type:str):
 
+        signal.signal(signal.SIGALRM, timed_out)
+
         document = QSCodeDocument(content=text,
                                 filename=filename,
                                 language=lang,
