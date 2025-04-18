@@ -4,16 +4,16 @@
 # parameters
 #
 #SBATCH --job-name=filtering_repo
-#SBATCH --output=/cl_data/exaone/joonwon.jang/filtering/logs/log_%j_%u_%x.out
-#SBATCH --error=/cl_data/exaone/joonwon.jang/filtering/logs/log_%j_%u_%x.err
-#SBATCH --chdir=/cl_data/exaone/joonwon.jang
+#SBATCH --output=/lab-exaone/joonwon.jang/filtering/logs/log_%j_%u_%x.out
+#SBATCH --error=/lab-exaone/joonwon.jang/filtering/logs/log_%j_%u_%x.err
+#SBATCH --chdir=/lab-exaone/joonwon.jang/
 #SBATCH --partition=all
 #SBATCH --nodes=15
-#SBATCH --nodelist=cluster-data-[02-16]
+#SBATCH --nodelist=cluster-data-[02-03]
 
-input_shared_dir='/cl_data/exaone/joonwon/input_repositories'
-output_shared_dir='/cl_data/exaone/joonwon/filtered_output'
-n_nodes=15
+input_shared_dir='/lab-exaone/exaone/joonwon/lg_stack/opc_data_filtering/test_data'
+output_shared_dir='/lab-exaone/exaone/joonwon/lg_stack/opc_data_filtering/clean_code'
+n_nodes=2
 n_cores=96
 
-srun bash -c "cd opc_data_filtering/run_exp; python filtering_repo_mn.py ${input_shared_dir} ${output_shared_dir} ${n_nodes} ${n_cores}" 
+srun bash -c "source opc/bin/activate; cd filtering/opc_data_filtering/run_exp; python filtering_repo_mn.py ${input_shared_dir} ${output_shared_dir} ${n_nodes} ${n_cores}" 
