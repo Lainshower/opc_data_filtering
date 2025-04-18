@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#
+# parameters
+#
+#SBATCH --job-name=filtering_repo
+#SBATCH --output=/cl_data/exaone/joonwon.jang/filtering/logs/log_%j_%u_%x.out
+#SBATCH --error=/cl_data/exaone/joonwon.jang/filtering/logs/log_%j_%u_%x.err
+#SBATCH --chdir=/cl_data/exaone/joonwon.jang
+#SBATCH --partition=all
+#SBATCH --nodes=15
+#SBATCH --nodelist=cluster-data-[02-16]
+
+input_shared_dir='/cl_data/exaone/joonwon/input_repositories'
+output_shared_dir='/cl_data/exaone/joonwon/filtered_output'
+n_nodes=15
+n_cores=96
+
+srun bash -c "cd opc_data_filtering/run_exp; python filtering_repo_mn.py ${input_shared_dir} ${output_shared_dir} ${n_nodes} ${n_cores}" 
