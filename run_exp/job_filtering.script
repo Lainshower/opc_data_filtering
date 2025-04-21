@@ -3,7 +3,7 @@
 #
 # parameters
 #
-#SBATCH --job-name=filtering_repo
+#SBATCH --job-name=joonwon.jang_filtering_repo
 #SBATCH --output=/lab-exaone/joonwon.jang/lg_stack/opc_data_filtering/logs/log_%j_%u_%x.out
 #SBATCH --error=/lab-exaone/joonwon.jang/lg_stack/opc_data_filtering/logs/log_%j_%u_%x.err
 #SBATCH --chdir=/lab-exaone/joonwon.jang/

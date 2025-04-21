@@ -114,50 +114,22 @@ code_filter_config['others'] = {
     'qsc_code_frac_chars_hex_words': 'lambda x : x > 0.4',
     'qsc_code_frac_lines_prompt_comments': 'lambda x :  x > 0.01',
     'qsc_code_frac_lines_assert': 'lambda x : x > 0.4'
-    
 } 
 
-### Added for jsonl file filtering
-# code filter for jsonl documents
+### Added for jsonl file filtering - minimal filtering to allow data files through
 code_filter_config['jsonl'] = {
-    # from text
-    'qsc_code_frac_chars_replacement_symbols': None,
-    'qsc_code_num_words': None,
-    'qsc_code_num_chars': None,
-    'qsc_code_mean_word_length': None,
-    'qsc_code_frac_words_unique': None,
-    'qsc_code_frac_chars_top_2grams': None,
-    'qsc_code_frac_chars_top_3grams': None,
-    'qsc_code_frac_chars_top_4grams': None,
-    'qsc_code_frac_chars_dupe_5grams': None,
-    'qsc_code_frac_chars_dupe_6grams': None,
-    'qsc_code_frac_chars_dupe_7grams': None,
-    'qsc_code_frac_chars_dupe_8grams': None,
-    'qsc_code_frac_chars_dupe_9grams': None,
-    'qsc_code_frac_chars_dupe_10grams': None,
-    'qsc_code_frac_lines_dupe_lines': None,
-
-    # from code
-    'qsc_code_size_file_byte': 'lambda x: x > 1e9',  # 1GB limit
-    'qsc_code_num_lines': None,
-    'qsc_code_num_chars_line_max': None,
-    'qsc_code_num_chars_line_mean': None,
-    'qsc_code_frac_chars_alphabet': None,
-    'qsc_code_frac_chars_digital': None,
-    'qsc_code_frac_chars_whitespace': None,
-    'qsc_code_frac_chars_comments': None,
-    'qsc_code_cate_xml_start': None,
-    'qsc_code_cate_autogen': None,
-    'qsc_code_frac_lines_long_string': None,
-    'qsc_code_frac_chars_string_length': None,
-    'qsc_code_frac_chars_long_word_length': None,
-    'qsc_code_frac_lines_string_concat': None,
-    'qsc_code_cate_encoded_data': None,
-    'qsc_code_frac_chars_hex_words': None,
-    'qsc_code_frac_lines_prompt_comments': None,
-    'qsc_code_frac_lines_assert': None
+    'char_count': None,  # No character count filter
+    'word_count': None,  # No word count filter
+    'line_count': None,  # No line count filter
+    'unique_word_ratio': None,  # No unique word ratio filter
+    'char_5gram_dup_ratio': None,  # No 5-gram duplication filter
+    'char_6gram_dup_ratio': None,  # No 6-gram duplication filter
+    'word_5gram_dup_ratio': None,  # No word 5-gram duplication filter
+    'word_6gram_dup_ratio': None,  # No word 6-gram duplication filter
+    'file_size': lambda x: x < 1024 * 1024 * 1024,  # Only filter files larger than 1GB
 }
 ###
+
 
 # code filter for data documents
 code_filter_config['data'] = {
@@ -324,14 +296,14 @@ code_filter_config['python'] = {
 
     # specific
     'qsc_codepython_cate_ast': 'lambda x: x == False',
-    'qsc_codepython_frac_lines_func_ratio': 'lambda x: x > 0.2',
+    # 'qsc_codepython_frac_lines_func_ratio': 'lambda x: x > 0.2',
+    'qsc_codepython_frac_lines_func_ratio': 'lambda x: x > 0.05',
     'qsc_codepython_cate_var_zero': 'lambda x:  x == True',
     'qsc_codepython_frac_lines_pass': 'lambda x: x > 0.05',
     'qsc_codepython_frac_lines_import': 'lambda x : x > 0.3',
     #'qsc_codepython_frac_lines_simplefunc': 'lambda x : x > 0.1',
     'qsc_codepython_frac_lines_simplefunc': 'lambda x : x > 0.3',
-    # 'qsc_codepython_score_lines_no_logic': 'lambda x : x > 0.5 and random.random() > 0.2',
-    'qsc_codepython_score_lines_no_logic': 'lambda x : x > 0.8 and random.random() > 0.2',
+    'qsc_codepython_score_lines_no_logic': 'lambda x : x > 0.5 and random.random() > 0.2',
     'qsc_codepython_frac_lines_print': 'lambda x : x > 0.4'
 }
 
