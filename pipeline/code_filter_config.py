@@ -116,29 +116,14 @@ code_filter_config['others'] = {
     'qsc_code_frac_lines_assert': 'lambda x : x > 0.4'
 } 
 
-### Added for jsonl file filtering - minimal filtering to allow data files through
-code_filter_config['jsonl'] = {
-    'char_count': None,  # No character count filter
-    'word_count': None,  # No word count filter
-    'line_count': None,  # No line count filter
-    'unique_word_ratio': None,  # No unique word ratio filter
-    'char_5gram_dup_ratio': None,  # No 5-gram duplication filter
-    'char_6gram_dup_ratio': None,  # No 6-gram duplication filter
-    'word_5gram_dup_ratio': None,  # No word 5-gram duplication filter
-    'word_6gram_dup_ratio': None,  # No word 6-gram duplication filter
-    'file_size': lambda x: x < 1024 * 1024 * 1024,  # Only filter files larger than 1GB
-}
-###
-
-
 # code filter for data documents
 code_filter_config['data'] = {
     
     # from text
     'qsc_code_frac_chars_replacement_symbols': 'lambda x: x > 0.01',
-    'qsc_code_num_words': 'lambda x: x < 30',
-    'qsc_code_num_chars': 'lambda x : x < 50 or x > 5000',
-    'qsc_code_mean_word_length': 'lambda x: x < 2 or x > 10',
+    'qsc_code_num_words': 'lambda x: x < 10',
+    'qsc_code_num_chars': 'lambda x : x < 10 or x > 10000',
+    'qsc_code_mean_word_length': 'lambda x: x < 2 or x > 15',
     'qsc_code_frac_words_unique': 'lambda x: x < 0.4',
     'qsc_code_frac_chars_top_2grams': 'lambda x: x > 0.20',
     'qsc_code_frac_chars_top_3grams': 'lambda x: x > 0.18',
@@ -149,14 +134,14 @@ code_filter_config['data'] = {
     'qsc_code_frac_chars_dupe_8grams': 'lambda x: x > 0.70',
     'qsc_code_frac_chars_dupe_9grams': 'lambda x: x > 0.70',
     'qsc_code_frac_chars_dupe_10grams': 'lambda x: x > 0.60',
-    'qsc_code_frac_lines_dupe_lines': 'lambda x :  x > 0.7',
+    'qsc_code_frac_lines_dupe_lines': 'lambda x :  x > 0.75',
 
     # from code
     'qsc_code_size_file_byte': 'lambda x :  x > 3e6',
     'qsc_code_num_lines' : 'lambda x : x < 10 or x > 100000',
-    'qsc_code_num_chars_line_max': 'lambda x : x > 1000',
+    'qsc_code_num_chars_line_max': 'lambda x : x > 5000',
     'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 100',
-    'qsc_code_frac_chars_alphabet': 'lambda x :  x < 0.5',
+    'qsc_code_frac_chars_alphabet': 'lambda x :  x < 0.3',
     'qsc_code_frac_chars_digital': 'lambda x :  x > 0.2',
     'qsc_code_frac_chars_whitespace': 'lambda x :  x > 0.5',
     'qsc_code_frac_chars_comments': 'lambda x :  x > 0.8',
@@ -259,8 +244,8 @@ code_filter_config['sql'] = {
 code_filter_config['python'] = {    
     # from text
     'qsc_code_frac_chars_replacement_symbols': 'lambda x: x > 0.01',
-    'qsc_code_num_words': 'lambda x: x < 30',
-    'qsc_code_num_chars': 'lambda x: x < 50',
+    'qsc_code_num_words': 'lambda x: x < 10',
+    'qsc_code_num_chars': 'lambda x: x < 30',
     'qsc_code_mean_word_length': 'lambda x: x < 2 or x > 10',
     'qsc_code_frac_words_unique': None,
     'qsc_code_frac_chars_top_2grams': 'lambda x: x > 0.20',
@@ -296,9 +281,8 @@ code_filter_config['python'] = {
 
     # specific
     'qsc_codepython_cate_ast': 'lambda x: x == False',
-    # 'qsc_codepython_frac_lines_func_ratio': 'lambda x: x > 0.2',
     'qsc_codepython_frac_lines_func_ratio': 'lambda x: x > 0.3',
-    'qsc_codepython_cate_var_zero': 'lambda x:  x == True',
+    # 'qsc_codepython_cate_var_zero': 'lambda x:  x == True',
     'qsc_codepython_frac_lines_pass': 'lambda x: x > 0.05',
     'qsc_codepython_frac_lines_import': 'lambda x : x > 0.3',
     #'qsc_codepython_frac_lines_simplefunc': 'lambda x : x > 0.1',
