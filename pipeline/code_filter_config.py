@@ -66,7 +66,7 @@ text_filter_config['en'] = {
     'qsc_doc_num_chars': 'lambda x: x < 50',
     'qsc_doc_num_lines': 'lambda x: x < 5',
     'qsc_doc_num_sentences': 'lambda x: x == 1',
-    'qsc_doc_num_words': 'lambda x: x < 50',
+    'qsc_doc_num_words': 'lambda x: x < 10',
 
     'qsc_doc_frac_chars_hex_words': 'lambda x : x > 0.4',
     'qsc_doc_frac_chars_hyperlink_html_tag': 'lambda x : x > 0.5',
