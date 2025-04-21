@@ -330,7 +330,8 @@ code_filter_config['python'] = {
     'qsc_codepython_frac_lines_import': 'lambda x : x > 0.3',
     #'qsc_codepython_frac_lines_simplefunc': 'lambda x : x > 0.1',
     'qsc_codepython_frac_lines_simplefunc': 'lambda x : x > 0.3',
-    'qsc_codepython_score_lines_no_logic': 'lambda x : x > 0.5 and random.random() > 0.2',
+    # 'qsc_codepython_score_lines_no_logic': 'lambda x : x > 0.5 and random.random() > 0.2',
+    'qsc_codepython_score_lines_no_logic': 'lambda x : x > 0.8 and random.random() > 0.2',
     'qsc_codepython_frac_lines_print': 'lambda x : x > 0.4'
 }
 

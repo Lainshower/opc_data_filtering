@@ -1,4 +1,5 @@
 PROGRAM_TO_TYPE = {
+    "jsonl": "data",
     "1c enterprise": "code",
     "2-dimensional array": "data",
     "4d": "code",
