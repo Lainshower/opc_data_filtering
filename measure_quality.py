@@ -15,10 +15,10 @@ def measure_code_quality(file_path):
         content=content,
         filename=filename,
         language='en',
-        extension='jsonl',
+        extension='txt',
         file_size_in_byte=file_size,
-        doc_type='data',
-        program_lang='jsonl'
+        doc_type='text',
+        program_lang='text'
     )
 
     # Python specific signals
@@ -117,4 +117,4 @@ def measure_code_quality(file_path):
             print(f"{name:40}: None")
 
 if __name__ == "__main__":
-    measure_code_quality('/home/joonwon/LG_STACK/opc_data_filtering/test_data/Fixed-Input-Parameterization/data/personachat_benchmark_100.jsonl')
+    measure_code_quality('/home/joonwon/LG_STACK/opc_data_filtering/test_data/Fixed-Input-Parameterization/requirements.txt')
