@@ -297,7 +297,7 @@ code_filter_config['python'] = {
     # specific
     'qsc_codepython_cate_ast': 'lambda x: x == False',
     # 'qsc_codepython_frac_lines_func_ratio': 'lambda x: x > 0.2',
-    'qsc_codepython_frac_lines_func_ratio': 'lambda x: x > 0.05',
+    'qsc_codepython_frac_lines_func_ratio': 'lambda x: x > 0.3',
     'qsc_codepython_cate_var_zero': 'lambda x:  x == True',
     'qsc_codepython_frac_lines_pass': 'lambda x: x > 0.05',
     'qsc_codepython_frac_lines_import': 'lambda x : x > 0.3',

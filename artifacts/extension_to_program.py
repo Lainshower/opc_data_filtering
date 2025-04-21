@@ -1,5 +1,4 @@
 EXTENSION_TO_PROGRAM = {
-    "jsonl": "jsonl",
     "c++": "cpp",
     "cc": "cpp",
     "cp": "cpp",
