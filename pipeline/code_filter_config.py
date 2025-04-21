@@ -117,6 +117,48 @@ code_filter_config['others'] = {
     
 } 
 
+### Added for jsonl file filtering
+# code filter for jsonl documents
+code_filter_config['jsonl'] = {
+    # from text
+    'qsc_code_frac_chars_replacement_symbols': None,
+    'qsc_code_num_words': None,
+    'qsc_code_num_chars': None,
+    'qsc_code_mean_word_length': None,
+    'qsc_code_frac_words_unique': None,
+    'qsc_code_frac_chars_top_2grams': None,
+    'qsc_code_frac_chars_top_3grams': None,
+    'qsc_code_frac_chars_top_4grams': None,
+    'qsc_code_frac_chars_dupe_5grams': None,
+    'qsc_code_frac_chars_dupe_6grams': None,
+    'qsc_code_frac_chars_dupe_7grams': None,
+    'qsc_code_frac_chars_dupe_8grams': None,
+    'qsc_code_frac_chars_dupe_9grams': None,
+    'qsc_code_frac_chars_dupe_10grams': None,
+    'qsc_code_frac_lines_dupe_lines': None,
+
+    # from code
+    'qsc_code_size_file_byte': 'lambda x: x > 1e9',  # 1GB limit
+    'qsc_code_num_lines': None,
+    'qsc_code_num_chars_line_max': None,
+    'qsc_code_num_chars_line_mean': None,
+    'qsc_code_frac_chars_alphabet': None,
+    'qsc_code_frac_chars_digital': None,
+    'qsc_code_frac_chars_whitespace': None,
+    'qsc_code_frac_chars_comments': None,
+    'qsc_code_cate_xml_start': None,
+    'qsc_code_cate_autogen': None,
+    'qsc_code_frac_lines_long_string': None,
+    'qsc_code_frac_chars_string_length': None,
+    'qsc_code_frac_chars_long_word_length': None,
+    'qsc_code_frac_lines_string_concat': None,
+    'qsc_code_cate_encoded_data': None,
+    'qsc_code_frac_chars_hex_words': None,
+    'qsc_code_frac_lines_prompt_comments': None,
+    'qsc_code_frac_lines_assert': None
+}
+###
+
 # code filter for data documents
 code_filter_config['data'] = {
     
@@ -286,7 +328,8 @@ code_filter_config['python'] = {
     'qsc_codepython_cate_var_zero': 'lambda x:  x == True',
     'qsc_codepython_frac_lines_pass': 'lambda x: x > 0.05',
     'qsc_codepython_frac_lines_import': 'lambda x : x > 0.3',
-    'qsc_codepython_frac_lines_simplefunc': 'lambda x : x > 0.1',
+    #'qsc_codepython_frac_lines_simplefunc': 'lambda x : x > 0.1',
+    'qsc_codepython_frac_lines_simplefunc': 'lambda x : x > 0.3',
     'qsc_codepython_score_lines_no_logic': 'lambda x : x > 0.5 and random.random() > 0.2',
     'qsc_codepython_frac_lines_print': 'lambda x : x > 0.4'
 }
