@@ -131,6 +131,13 @@ def apply_filtering(file_data):
         return None
         
     try:
+        # Special case: __init__.py files are always kept
+        if (file_data.get('ext') == 'py' and 
+            'init' in file_data.get('filename', '').lower()):
+            file_data['effective'] = '1'
+            file_data['hit_map'] = '{}'
+            return file_data
+            
         code_filter = CodeFilter()
         result = code_filter.evaluate(
             doc_type=file_data['doc_type'],
@@ -349,79 +356,90 @@ def process_file_with_repo(args):
     return process_file(file_path, repo_path)
 
 def process_repository(repo_path, output_dir, chunk_size=CHUNK_SIZE, num_processes=NUM_PROCESSES):
-    """Process a single repository
-    
-    Args:
-        repo_path (str): Path to the repository
-        output_dir (str): Directory to save output files
-        chunk_size (int): Number of files to process in each chunk
-        num_processes (int): Number of processes to use
-        
-    Returns:
-        tuple: (total_processed, total_with_signals, total_filtered, total_saved)
-    """
+    """Process a single repository"""
     repo_name = os.path.basename(repo_path)
     print(f"\nProcessing repository: {repo_name}")
     
-    # Find all files in repository
-    all_files = find_files_in_repository(repo_path)
-    if not all_files:
-        print(f"No files found in repository: {repo_name}")
+    try:
+        # Find all files in repository
+        all_files = find_files_in_repository(repo_path)
+        if not all_files:
+            print(f"No files found in repository: {repo_name}")
+            return 0, 0, 0, 0
+
+        total_processed = 0
+        total_with_signals = 0
+        total_filtered = 0
+        processed_files = []
+
+        for chunk in chunk_list(all_files, chunk_size):
+            try:
+                # Create list of (file_path, repo_path) tuples for processing
+                chunk_with_repo = [(f, repo_path) for f in chunk]
+                
+                # Process files
+                processed_chunk = process_files_in_parallel(
+                    chunk_with_repo,
+                    process_file_with_repo,
+                    num_processes,
+                    f"{repo_name}: Processing"
+                )
+                if not processed_chunk:  # 빈 리스트이거나 None인 경우
+                    raise Exception("File processing failed")
+                total_processed += len(processed_chunk)
+                
+                # Compute quality signals
+                signals_chunk = process_files_in_parallel(
+                    processed_chunk,
+                    compute_quality_signal,
+                    num_processes,
+                    f"{repo_name}: Signals"
+                )
+                if not signals_chunk:
+                    raise Exception("Signal computation failed")
+                total_with_signals += len(signals_chunk)
+                
+                # Apply filtering
+                filtered_chunk = process_files_in_parallel(
+                    signals_chunk,
+                    apply_filtering,
+                    num_processes,
+                    f"{repo_name}: Filtering"
+                )
+                if not filtered_chunk:
+                    raise Exception("Filtering failed")
+                
+                # Add filtered files to the list
+                processed_files.extend(filtered_chunk)
+
+            except Exception as chunk_error:
+                print(f"Error processing chunk in repository {repo_name}: {str(chunk_error)}")
+                return 0, 0, 0, 0
+
+        # Mark __init__.py files as effective
+        for file_data in processed_files:
+            if (file_data.get('ext') == 'py' and 
+                'init' in file_data.get('filename', '').lower()):
+                file_data['effective'] = '1'
+                
+        # Count effective files
+        effective_files = [f for f in processed_files if f.get('effective') == '1']
+        total_filtered = len(effective_files)
+        
+        # Save repository data
+        total_saved = save_repository_data(processed_files, repo_path, output_dir)
+        
+        print(f"Repository {repo_name} summary:")
+        print(f"- Files processed: {total_processed}")
+        print(f"- Quality signals computed: {total_with_signals}")
+        print(f"- Effective after filtering: {total_filtered}")
+        print(f"- Successfully saved: {total_saved}")
+        
+        return total_processed, total_with_signals, total_filtered, total_saved
+        
+    except Exception as e:
+        print(f"Error processing repository {repo_name}: {str(e)}")
         return 0, 0, 0, 0
-        
-    total_processed = 0
-    total_with_signals = 0
-    total_filtered = 0
-    
-    # Process files in chunks
-    processed_files = []
-    for chunk in chunk_list(all_files, chunk_size):
-        # Create list of (file_path, repo_path) tuples for processing
-        chunk_with_repo = [(f, repo_path) for f in chunk]
-        
-        # Process files
-        processed_chunk = process_files_in_parallel(
-            chunk_with_repo,
-            process_file_with_repo,
-            num_processes,
-            f"{repo_name}: Processing"
-        )
-        total_processed += len(processed_chunk)
-        
-        # Compute quality signals
-        signals_chunk = process_files_in_parallel(
-            processed_chunk,
-            compute_quality_signal,
-            num_processes,
-            f"{repo_name}: Signals"
-        )
-        total_with_signals += len(signals_chunk)
-        
-        # Apply filtering
-        filtered_chunk = process_files_in_parallel(
-            signals_chunk,
-            apply_filtering,
-            num_processes,
-            f"{repo_name}: Filtering"
-        )
-        
-        # Add filtered files to the list
-        processed_files.extend(filtered_chunk)
-        
-    # Count effective files
-    effective_files = [f for f in processed_files if f.get('effective') == '1']
-    total_filtered = len(effective_files)
-    
-    # Save repository data
-    total_saved = save_repository_data(processed_files, repo_path, output_dir)
-    
-    print(f"Repository {repo_name} summary:")
-    print(f"- Files processed: {total_processed}")
-    print(f"- Quality signals computed: {total_with_signals}")
-    print(f"- Effective after filtering: {total_filtered}")
-    print(f"- Successfully saved: {total_saved}")
-    
-    return total_processed, total_with_signals, total_filtered, total_saved
 
 def main(chunk_size=CHUNK_SIZE, num_processes=NUM_PROCESSES, input_dir=None, output_dir=None):
     """Main function to process and filter repositories
