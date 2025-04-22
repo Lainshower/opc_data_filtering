@@ -4,16 +4,16 @@
 # parameters
 #
 #SBATCH --job-name=joonwon.jang_filtering_repo
-#SBATCH --output=/lab-exaone/joonwon.jang/lg_stack/opc_data_filtering/2025_lg_stack_1000stars_NON-PERMISSIVE/log_%j_%u_%x.out
-#SBATCH --error=/lab-exaone/joonwon.jang/lg_stack/opc_data_filtering/2025_lg_stack_1000stars_NON-PERMISSIVE/log_%j_%u_%x.err
+#SBATCH --output=/lab-exaone/joonwon.jang/lg_stack/opc_data_filtering/2025_lg_stack_1000stars_PERMISSIVE/log_%j_%u_%x.out
+#SBATCH --error=/lab-exaone/joonwon.jang/lg_stack/opc_data_filtering/2025_lg_stack_1000stars_PERMISSIVE/log_%j_%u_%x.err
 #SBATCH --chdir=/lab-exaone/joonwon.jang/
 #SBATCH --partition=all
-#SBATCH --nodes=14
-#SBATCH --nodelist=cluster-data-[02-15]
+#SBATCH --nodes=1
+#SBATCH --nodelist=cluster-data-[02]
 
-input_shared_dir='/cl_data/exaone/joonwon.jang/pretrain/github_repos_2024_over_1000stars_raw/NON-PERMISSIVE'
-output_shared_dir='/cl_data/exaone/joonwon.jang/pretrain/github_repos_2024_over_1000stars_raw/NON-PERMISSIVE_FILTERED'
-n_nodes=14
-n_cores=96
+input_shared_dir='/cl_data/exaone/joonwon.jang/pretrain/github_repos_2024_over_1000stars_raw/PERMISSIVE'
+output_shared_dir='/cl_data/exaone/joonwon.jang/pretrain/github_repos_2024_over_1000stars_raw/PERMISSIVE_FILTERED'
+n_nodes=1
+n_cores=128
 
 srun bash -c "source opc/bin/activate; cd lg_stack/opc_data_filtering/run_exp; python -u filtering_repo_mn.py ${input_shared_dir} ${output_shared_dir} ${n_nodes} ${n_cores}"

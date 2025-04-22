@@ -97,9 +97,9 @@ code_filter_config['others'] = {
 
     # from code
     'qsc_code_size_file_byte': 'lambda x :  x > 3e6',
-    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 100000',
-    'qsc_code_num_chars_line_max': 'lambda x : x > 1000',
-    'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 100',
+    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 150000',
+    'qsc_code_num_chars_line_max': 'lambda x : x > 2000',
+    'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 200',
     'qsc_code_frac_chars_alphabet': 'lambda x :  x < 0.5',
     'qsc_code_frac_chars_digital': 'lambda x :  x > 0.2',
     'qsc_code_frac_chars_whitespace': 'lambda x :  x > 0.5',
@@ -138,7 +138,7 @@ code_filter_config['data'] = {
 
     # from code
     'qsc_code_size_file_byte': 'lambda x :  x > 3e6',
-    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 1000',
+    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 2000',
     'qsc_code_num_chars_line_max': 'lambda x : x > 20000',
     'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 15000',
     'qsc_code_frac_chars_alphabet': 'lambda x :  x < 0.3',
@@ -246,24 +246,24 @@ code_filter_config['python'] = {
     'qsc_code_frac_chars_replacement_symbols': 'lambda x: x > 0.01',
     'qsc_code_num_words': 'lambda x: x < 10',
     'qsc_code_num_chars': 'lambda x: x < 30',
-    'qsc_code_mean_word_length': 'lambda x: x < 2 or x > 10',
+    'qsc_code_mean_word_length': 'lambda x: x < 2 or x > 20',
     'qsc_code_frac_words_unique': None,
-    'qsc_code_frac_chars_top_2grams': 'lambda x: x > 0.20',
-    'qsc_code_frac_chars_top_3grams': 'lambda x: x > 0.18',
-    'qsc_code_frac_chars_top_4grams': 'lambda x: x > 0.16',
+    'qsc_code_frac_chars_top_2grams': 'lambda x: x > 0.30',
+    'qsc_code_frac_chars_top_3grams': 'lambda x: x > 0.30',
+    'qsc_code_frac_chars_top_4grams': 'lambda x: x > 0.30',
     'qsc_code_frac_chars_dupe_5grams': 'lambda x: x > 0.80',
-    'qsc_code_frac_chars_dupe_6grams': 'lambda x: x > 0.70',
-    'qsc_code_frac_chars_dupe_7grams': 'lambda x: x > 0.70',
-    'qsc_code_frac_chars_dupe_8grams': 'lambda x: x > 0.70',
-    'qsc_code_frac_chars_dupe_9grams': 'lambda x: x > 0.70',
-    'qsc_code_frac_chars_dupe_10grams': 'lambda x: x > 0.60',
-    'qsc_code_frac_lines_dupe_lines': 'lambda x :  x > 0.7',
+    'qsc_code_frac_chars_dupe_6grams': 'lambda x: x > 0.80',
+    'qsc_code_frac_chars_dupe_7grams': 'lambda x: x > 0.80',
+    'qsc_code_frac_chars_dupe_8grams': 'lambda x: x > 0.80',
+    'qsc_code_frac_chars_dupe_9grams': 'lambda x: x > 0.80',
+    'qsc_code_frac_chars_dupe_10grams': 'lambda x: x > 0.80',
+    'qsc_code_frac_lines_dupe_lines': 'lambda x :  x > 0.80',
 
     # from code
     'qsc_code_size_file_byte': 'lambda x :  x > 3e6',
-    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 100000',
-    'qsc_code_num_chars_line_max': 'lambda x : x > 1000',
-    'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 100',
+    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 150000',
+    'qsc_code_num_chars_line_max': 'lambda x : x > 2000',
+    'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 200',
     'qsc_code_frac_chars_alphabet': 'lambda x :  x < 0.5',
     'qsc_code_frac_chars_digital': 'lambda x :  x > 0.2',
     'qsc_code_frac_chars_whitespace': 'lambda x :  x > 0.5',
@@ -281,13 +281,13 @@ code_filter_config['python'] = {
 
     # specific
     'qsc_codepython_cate_ast': 'lambda x: x == False',
-    'qsc_codepython_frac_lines_func_ratio': 'lambda x: x > 0.3',
+    'qsc_codepython_frac_lines_func_ratio': 'lambda x: x > 0.35',
     # 'qsc_codepython_cate_var_zero': 'lambda x:  x == True',
     'qsc_codepython_frac_lines_pass': 'lambda x: x > 0.05',
     'qsc_codepython_frac_lines_import': 'lambda x : x > 0.3',
     #'qsc_codepython_frac_lines_simplefunc': 'lambda x : x > 0.1',
-    'qsc_codepython_frac_lines_simplefunc': 'lambda x : x > 0.3',
-    'qsc_codepython_score_lines_no_logic': 'lambda x : x > 0.5 and random.random() > 0.2',
+    'qsc_codepython_frac_lines_simplefunc': 'lambda x : x > 0.35',
+    'qsc_codepython_score_lines_no_logic': 'lambda x : x > 0.7 and random.random() > 0.2',
     'qsc_codepython_frac_lines_print': 'lambda x : x > 0.4'
 }
 
@@ -313,9 +313,9 @@ code_filter_config['cpp'] = {
 
     # from code
     'qsc_code_size_file_byte': 'lambda x :  x > 3e6',
-    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 100000',
-    'qsc_code_num_chars_line_max': 'lambda x : x > 1000',
-    'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 100',
+    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 150000',
+    'qsc_code_num_chars_line_max': 'lambda x : x > 2000',
+    'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 200',
     'qsc_code_frac_chars_alphabet': 'lambda x :  x < 0.5',
     'qsc_code_frac_chars_digital': 'lambda x :  x > 0.2',
     'qsc_code_frac_chars_whitespace': 'lambda x :  x > 0.5',
@@ -363,9 +363,9 @@ code_filter_config['c'] = {
 
     # from code
     'qsc_code_size_file_byte': 'lambda x :  x > 3e6',
-    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 100000',
-    'qsc_code_num_chars_line_max': 'lambda x : x > 1000',
-    'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 100',
+    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 150000',
+    'qsc_code_num_chars_line_max': 'lambda x : x > 2000',
+    'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 200',
     'qsc_code_frac_chars_alphabet': 'lambda x :  x < 0.5',
     'qsc_code_frac_chars_digital': 'lambda x :  x > 0.2',
     'qsc_code_frac_chars_whitespace': 'lambda x :  x > 0.5',
@@ -414,9 +414,9 @@ code_filter_config['csharp'] = {
 
     # from code
     'qsc_code_size_file_byte': 'lambda x :  x > 3e6',
-    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 100000',
-    'qsc_code_num_chars_line_max': 'lambda x : x > 1000',
-    'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 100',
+    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 150000',
+    'qsc_code_num_chars_line_max': 'lambda x : x > 2000',
+    'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 200',
     'qsc_code_frac_chars_alphabet': 'lambda x :  x < 0.5',
     'qsc_code_frac_chars_digital': 'lambda x :  x > 0.2',
     'qsc_code_frac_chars_whitespace': 'lambda x :  x > 0.5',
@@ -461,9 +461,9 @@ code_filter_config['go'] = {
 
     # from code
     'qsc_code_size_file_byte': 'lambda x :  x > 3e6',
-    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 100000',
-    'qsc_code_num_chars_line_max': 'lambda x : x > 1000',
-    'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 100',
+    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 150000',
+    'qsc_code_num_chars_line_max': 'lambda x : x > 2000',
+    'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 200',
     'qsc_code_frac_chars_alphabet': 'lambda x :  x < 0.5',
     'qsc_code_frac_chars_digital': 'lambda x :  x > 0.2',
     'qsc_code_frac_chars_whitespace': 'lambda x :  x > 0.5',
@@ -509,9 +509,9 @@ code_filter_config['html'] = {
 
     # from code
     'qsc_code_size_file_byte': 'lambda x :  x > 3e6',
-    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 100000',
-    'qsc_code_num_chars_line_max': 'lambda x : x > 1000',
-    'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 100',
+    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 150000',
+    'qsc_code_num_chars_line_max': 'lambda x : x > 2000',
+    'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 200',
     'qsc_code_frac_chars_alphabet': 'lambda x :  x < 0.5',
     'qsc_code_frac_chars_digital': 'lambda x :  x > 0.2',
     'qsc_code_frac_chars_whitespace': 'lambda x :  x > 0.5',
@@ -555,9 +555,9 @@ code_filter_config['java'] = {
 
     # from code
     'qsc_code_size_file_byte': 'lambda x :  x > 3e6',
-    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 100000',
-    'qsc_code_num_chars_line_max': 'lambda x : x > 1000',
-    'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 100',
+    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 150000',
+    'qsc_code_num_chars_line_max': 'lambda x : x > 2000',
+    'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 200',
     'qsc_code_frac_chars_alphabet': 'lambda x :  x < 0.5',
     'qsc_code_frac_chars_digital': 'lambda x :  x > 0.2',
     'qsc_code_frac_chars_whitespace': 'lambda x :  x > 0.5',
@@ -606,9 +606,9 @@ code_filter_config["javascript"] = {
 
     # from code
     'qsc_code_size_file_byte': 'lambda x :  x > 3e6',
-    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 100000',
-    'qsc_code_num_chars_line_max': 'lambda x : x > 1000',
-    'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 100',
+    'qsc_code_num_lines' : 'lambda x : x < 10 or x > 150000',
+    'qsc_code_num_chars_line_max': 'lambda x : x > 2000',
+    'qsc_code_num_chars_line_mean': 'lambda x :  x < 5 or x > 200',
     'qsc_code_frac_chars_alphabet': 'lambda x :  x < 0.5',
     'qsc_code_frac_chars_digital': 'lambda x :  x > 0.2',
     'qsc_code_frac_chars_whitespace': 'lambda x :  x > 0.5',

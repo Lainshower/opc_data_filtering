@@ -14,11 +14,11 @@ def measure_code_quality(file_path):
     doc = QSCodeDocument(
         content=content,
         filename=filename,
-        language='en',
-        extension='txt',
+        language='python',
+        extension='py',
         file_size_in_byte=file_size,
-        doc_type='text',
-        program_lang='text'
+        doc_type='code',
+        program_lang='python'
     )
 
     # Python specific signals
@@ -30,6 +30,8 @@ def measure_code_quality(file_path):
         'qsc_codepython_frac_lines_import': QSC_CodePython_Frac_Lines_Import(),
         'qsc_codepython_frac_lines_simplefunc': QSC_CodePython_Frac_Lines_SimpleFunc(),
         'qsc_codepython_score_lines_no_logic': QSC_CodePython_Score_Lines_No_Logic(),
+        'qsc_code_frac_lines_dupe_lines': QSC_Code_Frac_Lines_Dupe_Lines(),
+        'qsc_code_frac_lines_long_string': QSC_Code_Frac_Lines_Long_String(),
     }
 
     # Code signals
@@ -117,4 +119,4 @@ def measure_code_quality(file_path):
             print(f"{name:40}: None")
 
 if __name__ == "__main__":
-    measure_code_quality('/home/joonwon/LG_STACK/opc_data_filtering/test_data/Fixed-Input-Parameterization/requirements.txt')
+    measure_code_quality('/home/joonwon/mini-omni2/litgpt/config.py')
