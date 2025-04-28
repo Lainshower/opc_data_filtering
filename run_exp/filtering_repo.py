@@ -416,11 +416,11 @@ def process_repository(repo_path, output_dir, chunk_size=CHUNK_SIZE, num_process
                 print(f"Error processing chunk in repository {repo_name}: {str(chunk_error)}")
                 return 0, 0, 0, 0
 
-        # Mark __init__.py files as effective
-        for file_data in processed_files:
-            if (file_data.get('ext') == 'py' and 
-                'init' in file_data.get('filename', '').lower()):
-                file_data['effective'] = '1'
+        # # Mark __init__.py files as effective
+        # for file_data in processed_files:
+        #     if (file_data.get('ext') == 'py' and 
+        #         'init' in file_data.get('filename', '').lower()):
+        #         file_data['effective'] = '1'
                 
         # Count effective files
         effective_files = [f for f in processed_files if f.get('effective') == '1']
