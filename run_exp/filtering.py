@@ -15,7 +15,7 @@ sys.path.append(ROOT_PATH)
 import fasttext
 from utils.preprocessing import get_program_lang, get_doc_type
 from pipeline.compute_quality_signals import ComputeCodeQualitySignal
-from pipeline.compute_filtering import CodeFilter
+from pipeline.compute_filtering_script import CodeFilter
 
 # Constants - These can be adjusted based on your system resources and dataset size
 CHUNK_SIZE = 100  # Number of files to process in each chunk (increase for better I/O efficiency with large datasets)
@@ -201,105 +201,34 @@ def process_files_in_parallel(file_paths, processor_func, num_processes, desc, *
     return [r for r in results if r is not None]
 
 def save_filtered_files(filtered_data, target_dir, max_file_size_gb=MAX_FILE_SIZE_GB):
-    """Save filtered files to jsonl files by language, with configurable max file size
+    """Save filtered files to jsonl files by language and filename
     
     Args:
         filtered_data (list): List of filtered file data dictionaries
         target_dir (str): Directory to save output files
-        max_file_size_gb (int): Maximum size of each output JSONL file in GB
+        max_file_size_gb (int): (Unused) Kept for compatibility
         
     Returns:
         int: Number of files successfully saved
     """
-    # Calculate max file size in bytes
-    max_file_size_bytes = max_file_size_gb * 1024 * 1024 * 1024
-    
-    # Dictionary to keep track of current file index for each language
-    lang_file_indices = {}
-    # Dictionary to keep track of current file handles
-    lang_file_handles = {}
-    # Dictionary to keep track of current file sizes
-    lang_file_sizes = {}
-    
     saved_count = 0
-    
-    try:
-        for file_data in filtered_data:
-            if file_data.get('effective') == '1':
-                # Get language and create language directory
-                lang = file_data['program_lang']
-                lang_dir = os.path.join(target_dir, lang)
-                os.makedirs(lang_dir, exist_ok=True)
-                
-                # Initialize file index for this language if not exists
-                if lang not in lang_file_indices:
-                    lang_file_indices[lang] = 0
-                    
-                    # Find the highest existing index for this language
-                    existing_files = [f for f in os.listdir(lang_dir) if f.startswith(f"{lang}_") and f.endswith(".jsonl")]
-                    if existing_files:
-                        highest_index = max([int(f.split('_')[1].split('.')[0]) for f in existing_files])
-                        lang_file_indices[lang] = highest_index
-                
-                # Get or create file handle for this language
-                if lang not in lang_file_handles:
-                    file_index = lang_file_indices[lang]
-                    file_name = f"{lang}_{file_index:03d}.jsonl"
-                    file_path = os.path.join(lang_dir, file_name)
-                    
-                    # Check if file exists and get its size
-                    if os.path.exists(file_path):
-                        lang_file_sizes[lang] = os.path.getsize(file_path)
-                        # If file is already at max size, increment index and create new file
-                        if lang_file_sizes[lang] >= max_file_size_bytes:
-                            file_index += 1
-                            lang_file_indices[lang] = file_index
-                            file_name = f"{lang}_{file_index:03d}.jsonl"
-                            file_path = os.path.join(lang_dir, file_name)
-                            lang_file_sizes[lang] = 0
-                    else:
-                        lang_file_sizes[lang] = 0
-                    
-                    # Open file for appending
-                    lang_file_handles[lang] = open(file_path, 'a', encoding='utf-8')
-                
-                # Prepare data for jsonl
-                json_data = {
-                    "problem": file_data['text'],
-                    "file_name": file_data['filename'],
-                    "ext": file_data['ext']
-                }
-                
-                # Convert to json string and add newline
+    for file_data in filtered_data:
+        if file_data.get('effective') == '1':
+            lang = file_data['program_lang']
+            lang_dir = os.path.join(target_dir, lang)
+            os.makedirs(lang_dir, exist_ok=True)
+            file_name = f"{file_data['filename']}.jsonl"
+            file_path = os.path.join(lang_dir, file_name)
+            json_data = {
+                "problem": file_data['text'],
+                "file_name": file_data['filename'],
+                "ext": file_data['ext']
+            }
+            with open(file_path, 'w', encoding='utf-8') as f:
                 json_str = json.dumps(json_data, ensure_ascii=False) + '\n'
-                json_bytes = json_str.encode('utf-8')
-                
-                # Check if adding this data would exceed max file size
-                if lang_file_sizes[lang] + len(json_bytes) > max_file_size_bytes:
-                    # Close current file
-                    lang_file_handles[lang].close()
-                    
-                    # Increment file index
-                    file_index = lang_file_indices[lang] + 1
-                    lang_file_indices[lang] = file_index
-                    
-                    # Create new file
-                    file_name = f"{lang}_{file_index:03d}.jsonl"
-                    file_path = os.path.join(lang_dir, file_name)
-                    lang_file_handles[lang] = open(file_path, 'a', encoding='utf-8')
-                    lang_file_sizes[lang] = 0
-                
-                # Write data to file
-                lang_file_handles[lang].write(json_str)
-                lang_file_sizes[lang] += len(json_bytes)
+                f.write(json_str)
                 saved_count += 1
-                
-        return saved_count
-    
-    finally:
-        # Close all open file handles
-        for handle in lang_file_handles.values():
-            handle.close()
+    return saved_count
 
 # Main execution
 def main(chunk_size=CHUNK_SIZE, num_processes=NUM_PROCESSES, max_file_size_gb=MAX_FILE_SIZE_GB, 

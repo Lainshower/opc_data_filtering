@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#
+# parameters
+#
+#SBATCH --job-name=joonwon.jang_filtering_file
+#SBATCH --output=/lab-exaone/joonwon.jang/lg_stack/opc_data_filtering/2025_lg_stack_1000stars_PERMISSIVE/log_file_%j_%u_%x.out
+#SBATCH --error=/lab-exaone/joonwon.jang/lg_stack/opc_data_filtering/2025_lg_stack_1000stars_PERMISSIVE/log_file_%j_%u_%x.err
+#SBATCH --chdir=/lab-exaone/joonwon.jang/
+#SBATCH --partition=all
+#SBATCH --nodes=12
+#SBATCH --nodelist=cluster-data-[03-14]
+
+input_shared_dir='/cl_data/exaone/joonwon.jang/pretrain/github_repos_2024_over_1000stars_raw/PERMISSIVE'
+output_shared_dir='/cl_data/exaone/joonwon.jang/pretrain/github_repos_2024_over_1000stars_raw/PERMISSIVE_FILTERED_FILE'
+n_nodes=12
+n_cores=128
+
+srun bash -c "source opc/bin/activate; cd lg_stack/opc_data_filtering/run_exp; python -u filtering_mn.py ${input_shared_dir} ${output_shared_dir} ${n_nodes} ${n_cores}" 
